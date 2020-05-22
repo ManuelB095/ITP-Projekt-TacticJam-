@@ -6,8 +6,8 @@ public class Hex : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    public float x;
-    public float z;
+    public int x;
+    public int z;
 
 
     /*public Hex[] GetNeighbor()
