@@ -4,26 +4,40 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
-    //Cool variables here
-
-
+    private GameObject tileOccupiedBy;
+    int speed;
+    int attackRange;
 
     private void Start()
     {
-        //Initialize your shit here
+        tileOccupiedBy = null;
+        speed = 2;
+        attackRange = 1;
     }
-
-    //Cool Methods here
 
     public void MoveUnit(Transform newLocation, GameObject tileToMoveTo)
     {
+        if(tileOccupiedBy != null)
+        {
+            tileOccupiedBy.GetComponent<Tile>().UnoccupyTile();
+        }
+
+        tileOccupiedBy = tileToMoveTo;
         float x, y;
         x = newLocation.position.x;
         y = newLocation.position.y + 0.2f;
 
         this.transform.position = new Vector2(x, y);
         tileToMoveTo.GetComponent<Tile>().OccupyTile();
-
     }
 
+    public void ShowPossibleDistance()
+    {
+        if (tileOccupiedBy != null)
+        {
+            tileOccupiedBy.GetComponent<Tile>().ShowPossibleDistance(speed);
+        }
+    }
 }
+
+

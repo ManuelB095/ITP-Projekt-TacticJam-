@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class Tile : MonoBehaviour
 {
-    private bool isOccupied = false;
     public SpriteRenderer tileColor;
+
+    private bool isOccupied = false;
     protected GameObject occupiedBy;
+
+    protected GameObject[] tileNeighbors;
+    protected int row;
+    protected int column;
 
     private void Start()
     {
@@ -14,20 +19,40 @@ public class Tile : MonoBehaviour
         occupiedBy = null;
     }
 
+    public void Initialize(int rowToSet, int colToSet)
+    {
+        row = rowToSet;
+        column = colToSet;
+    }
+
     public void OccupyTile()
     {
-        if(isOccupied)
+        if(!isOccupied)
+        {
+            isOccupied = true;
+            tileColor.color = Color.red;
+            Debug.Log("Is now occupied");
+        } 
+    }
+
+    public void UnoccupyTile()
+    {
+        if (isOccupied)
         {
             isOccupied = false;
             tileColor.color = Color.white;
             Debug.Log("Is now unoccupied");
         }
-        else if(!isOccupied)
-        {
-            isOccupied = true;
-            tileColor.color = Color.red;
-            Debug.Log("Is now occupied");
-        }
+    }
+
+    public int GetRow()
+    {
+        return row;
+    }
+
+    public int GetColumn()
+    {
+        return column;
     }
 
     public void AddUnitToTile(GameObject unitToOccupy)
@@ -40,6 +65,14 @@ public class Tile : MonoBehaviour
         {
             occupiedBy = unitToOccupy;
             Debug.Log("A unit is occupying this tile");
+        }
+    }
+
+    public void ShowPossibleDistance(int speed)
+    {
+        for(int i = 1; i < speed; ++i)
+        {
+
         }
     }
 }

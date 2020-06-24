@@ -28,7 +28,6 @@ public class MouseManager : MonoBehaviour
 
             if(hit.collider != null)
             {
-                Debug.Log("something got clicked!");
                 savedObject = hit.collider.gameObject;
             }
 
@@ -42,18 +41,23 @@ public class MouseManager : MonoBehaviour
         {
             if(savedObject.GetComponent<Tile>() && selectedUnit == null)
             {
-                savedObject.GetComponent<Tile>().OccupyTile();
+                Debug.Log("Tile " + savedObject.GetComponent<Tile>().GetRow() + "." + savedObject.GetComponent<Tile>().GetColumn() + " was clicked while no unit was selected");
+                savedObject = null;
             }
             else if(savedObject.GetComponent<Unit>() && selectedUnit == null)
             {
                 selectedUnit = savedObject;
+                selectedUnit.GetComponent<Unit>().ShowPossibleDistance();
                 Debug.Log("Unit is selected");
+                savedObject = null;
             }
             else if(savedObject.GetComponent<Tile>() && selectedUnit != null)
             {
                 selectedUnit.GetComponent<Unit>().MoveUnit(savedObject.GetComponent<Transform>(), savedObject);
+                
+                Debug.Log("Unit was moved to Tile " + savedObject.GetComponent<Tile>().GetRow() + "." + savedObject.GetComponent<Tile>().GetColumn());
                 selectedUnit = null;
-                Debug.Log("Unit was moved");
+                savedObject = null;
             }
         }
     }
