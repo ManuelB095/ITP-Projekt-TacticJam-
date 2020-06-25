@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class TileMap : MonoBehaviour
 {
+    //Prefabs
     public GameObject tile;
     public GameObject unit;
+
     private int height;
     private int length;
-    private List<GameObject> tileList;
-    private List<GameObject> unitList;
+    private List<Tile> tileList;
+    private List<Unit> unitList;
 
     public TileMap()
     {
@@ -19,8 +21,8 @@ public class TileMap : MonoBehaviour
 
     void Start()
     {
-        tileList = new List<GameObject>();
-        unitList = new List<GameObject>();
+        tileList = new List<Tile>();
+        unitList = new List<Unit>();
 
         GenerateMap1();
         AddUnitToMap(0);
@@ -34,14 +36,14 @@ public class TileMap : MonoBehaviour
             {
                 GameObject newTile = Instantiate(tile, new Vector2(x, y), Quaternion.identity);
                 newTile.GetComponent<Tile>().Initialize(x + 1, y + 1);
-                tileList.Add(newTile);
+                tileList.Add(newTile.GetComponent<Tile>());
             }
         }
     }
 
     private void GenerateMap1()
     {
-        Vector2 startPosition = new Vector2(-3f, -2f);
+        Vector2 startPosition = new Vector2(-3f, -3f);
         int rowOffset = 0;
         float offset = 0f;
 
@@ -49,10 +51,10 @@ public class TileMap : MonoBehaviour
         {
             for(int y = 0; y < GetLength(); ++y)
             {
-                Vector2 newTilePosition = new Vector2(startPosition.x + y - offset, startPosition.y + (x*0.75f));
+                Vector2 newTilePosition = new Vector2(startPosition.x + (y*1.44f) - offset, startPosition.y + (x*1.08f));   //y*0,96 , x*0,72
                 GameObject newTile = Instantiate(tile, newTilePosition, Quaternion.identity);
                 newTile.GetComponent<Tile>().Initialize(x + 1, y + 1 + rowOffset);
-                tileList.Add(newTile);
+                tileList.Add(newTile.GetComponent<Tile>());
 
                 if ((x == 0 || x == 6) && y == 5)
                 { 
@@ -70,28 +72,27 @@ public class TileMap : MonoBehaviour
             if(x >= 3)
             {
                 ++rowOffset;
-                offset -= 0.5f;
+                offset -= 0.72f;   //0,48 original
             }
             else
             {
-                offset += 0.5f;
+                offset += 0.72f;
             }
+        }
+
+        foreach (Tile tile in tileList)
+        {
+            tile.SetTileNeighbours();
         }
     }
 
     private void AddUnitToMap(int tileNumber)
     {
         GameObject newUnit = Instantiate(unit, GetTileVector(tileNumber), Quaternion.identity);
-        unitList.Add(newUnit);
-        GameObject tileToAddTo = tileList[tileNumber];
-        tileToAddTo.GetComponent<Tile>().AddUnitToTile(newUnit);
-        tileToAddTo.GetComponent<Tile>().OccupyTile();
-    }
-
-    public GameObject ReturnTile(int x, int y)
-    {
-        GameObject tileToLookFor = tileList.Find(ourObject => ourObject.transform.position.x == x && ourObject.transform.position.y == y);
-        return tileToLookFor;
+        unitList.Add(newUnit.GetComponent<Unit>());
+        Tile tileToAddTo = tileList[tileNumber];
+        tileToAddTo.AddUnitToTile(newUnit.GetComponent<Unit>());
+        tileToAddTo.OccupyTile();
     }
 
     private int GetHeight()
@@ -113,4 +114,18 @@ public class TileMap : MonoBehaviour
         return vec;
     }
 
+    public Tile GetTileFromList(int row, int column)
+    {
+        Tile tileToLookFor = tileList.Find(ourObject => ourObject.GetRow() == row && ourObject.GetColumn() == column);
+        if(tileToLookFor)
+        {
+            Debug.Log("Matching Tile was found");
+            return tileToLookFor;
+        }
+        else
+        {
+            Debug.Log("Couldnt find matching Tile");
+            return null;
+        }
+    }
 }

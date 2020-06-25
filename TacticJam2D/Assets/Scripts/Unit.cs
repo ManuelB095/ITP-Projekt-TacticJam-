@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
-    private GameObject tileOccupiedBy;
+    private Tile tileOccupiedBy;
     int speed;
     int attackRange;
 
@@ -15,11 +15,11 @@ public class Unit : MonoBehaviour
         attackRange = 1;
     }
 
-    public void MoveUnit(Transform newLocation, GameObject tileToMoveTo)
+    public void MoveUnit(Transform newLocation, Tile tileToMoveTo)
     {
         if(tileOccupiedBy != null)
         {
-            tileOccupiedBy.GetComponent<Tile>().UnoccupyTile();
+            tileOccupiedBy.UnoccupyTile();
         }
 
         tileOccupiedBy = tileToMoveTo;
@@ -28,14 +28,14 @@ public class Unit : MonoBehaviour
         y = newLocation.position.y + 0.2f;
 
         this.transform.position = new Vector2(x, y);
-        tileToMoveTo.GetComponent<Tile>().OccupyTile();
+        tileToMoveTo.OccupyTile();
     }
 
     public void ShowPossibleDistance()
     {
         if (tileOccupiedBy != null)
         {
-            tileOccupiedBy.GetComponent<Tile>().ShowPossibleDistance(speed);
+            tileOccupiedBy.ShowPossibleDistance(speed);
         }
     }
 }

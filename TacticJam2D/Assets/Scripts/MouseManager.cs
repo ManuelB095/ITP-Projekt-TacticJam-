@@ -42,6 +42,7 @@ public class MouseManager : MonoBehaviour
             if(savedObject.GetComponent<Tile>() && selectedUnit == null)
             {
                 Debug.Log("Tile " + savedObject.GetComponent<Tile>().GetRow() + "." + savedObject.GetComponent<Tile>().GetColumn() + " was clicked while no unit was selected");
+                savedObject.GetComponent<Tile>().TestPrintNeighbours();
                 savedObject = null;
             }
             else if(savedObject.GetComponent<Unit>() && selectedUnit == null)
@@ -53,7 +54,7 @@ public class MouseManager : MonoBehaviour
             }
             else if(savedObject.GetComponent<Tile>() && selectedUnit != null)
             {
-                selectedUnit.GetComponent<Unit>().MoveUnit(savedObject.GetComponent<Transform>(), savedObject);
+                selectedUnit.GetComponent<Unit>().MoveUnit(savedObject.GetComponent<Transform>(), savedObject.GetComponent<Tile>());
                 
                 Debug.Log("Unit was moved to Tile " + savedObject.GetComponent<Tile>().GetRow() + "." + savedObject.GetComponent<Tile>().GetColumn());
                 selectedUnit = null;
