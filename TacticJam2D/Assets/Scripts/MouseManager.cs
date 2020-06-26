@@ -54,11 +54,15 @@ public class MouseManager : MonoBehaviour
             }
             else if(savedObject.GetComponent<Tile>() && selectedUnit != null)
             {
-                selectedUnit.GetComponent<Unit>().MoveUnit(savedObject.GetComponent<Transform>(), savedObject.GetComponent<Tile>());
-                
-                Debug.Log("Unit was moved to Tile " + savedObject.GetComponent<Tile>().GetRow() + "." + savedObject.GetComponent<Tile>().GetColumn());
-                selectedUnit = null;
-                savedObject = null;
+                if(savedObject.GetComponent<Tile>().IsShowingDistance())
+                {
+                    GameObject.FindObjectOfType<TileMap>().UnshowPossibleDistance();
+                    selectedUnit.GetComponent<Unit>().MoveUnit(savedObject.GetComponent<Transform>(), savedObject.GetComponent<Tile>());
+
+                    Debug.Log("Unit was moved to Tile " + savedObject.GetComponent<Tile>().GetRow() + "." + savedObject.GetComponent<Tile>().GetColumn());
+                    selectedUnit = null;
+                    savedObject = null;
+                }
             }
         }
     }

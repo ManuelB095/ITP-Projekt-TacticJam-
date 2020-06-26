@@ -8,17 +8,24 @@ public class Tile : MonoBehaviour
     public SpriteRenderer tileColor;
 
     private bool isOccupied = false;
+    private bool isShowingDistance = false;
+    private bool isShowingAttackRange = false;
     protected Unit occupiedBy;
 
     protected List<Tile> tileNeighbours;
     protected int row;
     protected int column;
+    
+    private void Awake()
+    {
+        tileNeighbours = new List<Tile>();
+        tileColor.color = Color.white;
+        occupiedBy = null;
+    }
 
     private void Start()
     {
-        tileColor.color = Color.white;
-        occupiedBy = null;
-        tileNeighbours = new List<Tile>();
+        
     }
 
     public void Initialize(int rowToSet, int colToSet)
@@ -32,7 +39,7 @@ public class Tile : MonoBehaviour
         if(!isOccupied)
         {
             isOccupied = true;
-            tileColor.color = Color.red;
+            tileColor.color = Color.yellow;
             Debug.Log("Is now occupied");
         } 
     }
@@ -57,6 +64,21 @@ public class Tile : MonoBehaviour
         return column;
     }
 
+    public bool IsShowingDistance()
+    {
+        return isShowingDistance;
+    }
+
+    public bool IsShowingAttackRange()
+    {
+        return isShowingAttackRange;
+    }
+
+    public List<Tile> GetNeighbourList()
+    {
+        return this.tileNeighbours;
+    }
+
     public void AddUnitToTile(Unit unitToOccupy)
     {
         if(isOccupied)
@@ -70,12 +92,86 @@ public class Tile : MonoBehaviour
         }
     }
 
-    public void ShowPossibleDistance(int speed)
+    public void ShowPossibleDistance(int speed, int attackRange)
     {
-        for(int i = 1; i < speed; ++i)
+        foreach (Tile neighbours in tileNeighbours)
         {
-
+            neighbours.ColorPossibleDistance();
         }
+        if (speed == 1)
+        {
+            return;
+        }
+
+        List<Tile> coloredTiles = new List<Tile>();
+        foreach (Tile neighbours in tileNeighbours)
+        {
+            coloredTiles.Add(neighbours);
+        }
+
+        for (int i = 1; i < speed; ++i)
+        {
+            List<Tile> temporaryList = new List<Tile>();
+            foreach(Tile colorNeighbour in coloredTiles)
+            {
+                foreach(Tile newColoredNeighbour in colorNeighbour.GetNeighbourList())
+                {
+                    if (newColoredNeighbour.IsShowingDistance())
+                    { }
+                    else
+                    {
+                        newColoredNeighbour.ColorPossibleDistance();
+                        temporaryList.Add(newColoredNeighbour);
+                    }
+                }
+            }
+            foreach(Tile temporaryTile in temporaryList)
+            {
+                coloredTiles.Add(temporaryTile);
+            }
+        }
+
+        for (int i = 0; i < attackRange; ++i)
+        {
+            List<Tile> temporaryList = new List<Tile>();
+            foreach (Tile colorNeighbour in coloredTiles)
+            {
+                foreach (Tile newColoredNeighbour in colorNeighbour.GetNeighbourList())
+                {
+                    if (newColoredNeighbour.IsShowingDistance() || newColoredNeighbour.IsShowingAttackRange())
+                    { }
+                    else
+                    {
+                        newColoredNeighbour.ColorPossibleAttackRange();
+                        temporaryList.Add(newColoredNeighbour);
+                    }
+                }
+            }
+            foreach (Tile temporaryTile in temporaryList)
+            {
+                coloredTiles.Add(temporaryTile);
+            }
+        }
+
+    }
+
+    public void ColorPossibleDistance()
+    {
+        this.tileColor.color = Color.blue;
+        this.isShowingDistance = true;
+    }
+
+    public void ColorPossibleAttackRange()
+    {
+        this.tileColor.color = Color.red;
+        this.isShowingAttackRange = true;
+    }
+
+    public void UncolorTile()
+    {
+        this.tileColor.color = Color.white;
+        this.isShowingDistance = false;
+        this.isShowingAttackRange = false;
     }
 
     public void TestPrintNeighbours()
@@ -131,24 +227,14 @@ public class Tile : MonoBehaviour
                 }
 
                 neighbour = daTileMapman.GetTileFromList(GetRow() + rowOffset, GetColumn() + colOffset);
-                Debug.Log(neighbour);
                 if (neighbour == null)
                 {
-                    Debug.Log("Neighbour variable was null");
                     continue;
                 }
                 else
                 {
-                    try
-                    {
-                        tileNeighbours.Add(neighbour);
-                        Debug.Log("Neighbour added");
-                    }
-                    catch(NullReferenceException ex)
-                    {
-                        Debug.Log("couldnt find a neighbour, error was: " + ex);
-                    }
-                    
+                    tileNeighbours.Add(neighbour);
+                    Debug.Log("Neighbour added");
                 }
 
             }

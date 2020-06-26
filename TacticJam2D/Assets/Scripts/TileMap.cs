@@ -77,9 +77,8 @@ public class TileMap : MonoBehaviour
             else
             {
                 offset += 0.72f;
-            }
+            } 
         }
-
         foreach (Tile tile in tileList)
         {
             tile.SetTileNeighbours();
@@ -92,6 +91,7 @@ public class TileMap : MonoBehaviour
         unitList.Add(newUnit.GetComponent<Unit>());
         Tile tileToAddTo = tileList[tileNumber];
         tileToAddTo.AddUnitToTile(newUnit.GetComponent<Unit>());
+        newUnit.GetComponent<Unit>().Initialize(tileToAddTo);
         tileToAddTo.OccupyTile();
     }
 
@@ -119,13 +119,22 @@ public class TileMap : MonoBehaviour
         Tile tileToLookFor = tileList.Find(ourObject => ourObject.GetRow() == row && ourObject.GetColumn() == column);
         if(tileToLookFor)
         {
-            Debug.Log("Matching Tile was found");
             return tileToLookFor;
         }
         else
         {
-            Debug.Log("Couldnt find matching Tile");
             return null;
+        }
+    }
+
+    public void UnshowPossibleDistance()
+    {
+        foreach(Tile tile in tileList)
+        {
+            if(tile.IsShowingAttackRange() || tile.IsShowingDistance())
+            {
+                tile.UncolorTile();
+            }
         }
     }
 }

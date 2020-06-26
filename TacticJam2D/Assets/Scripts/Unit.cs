@@ -8,11 +8,16 @@ public class Unit : MonoBehaviour
     int speed;
     int attackRange;
 
-    private void Start()
+    private void Awake()
     {
         tileOccupiedBy = null;
         speed = 2;
         attackRange = 1;
+    }
+
+    public void Initialize(Tile tileToOccupy)
+    {
+        tileOccupiedBy = tileToOccupy;
     }
 
     public void MoveUnit(Transform newLocation, Tile tileToMoveTo)
@@ -35,7 +40,7 @@ public class Unit : MonoBehaviour
     {
         if (tileOccupiedBy != null)
         {
-            tileOccupiedBy.ShowPossibleDistance(speed);
+            tileOccupiedBy.ShowPossibleDistance(speed, attackRange);
         }
     }
 }
