@@ -194,7 +194,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tile: {fileID: 3089673329472842610, guid: 3c6b54d766f0cde4ab4882dde18e51db, type: 3}
-  unit: {fileID: 651833228045420601, guid: 243c09dcbebb4ac4ca89e2fd6258ad07, type: 3}
+  playerUnitBlue: {fileID: 651833228045420601, guid: 243c09dcbebb4ac4ca89e2fd6258ad07,
+    type: 3}
+  playerUnitRed: {fileID: 651833228045420601, guid: f741cd32992e980478cd8a1a6fa8bb1c,
+    type: 3}
 --- !u!4 &1600539413
 Transform:
   m_ObjectHideFlags: 0
