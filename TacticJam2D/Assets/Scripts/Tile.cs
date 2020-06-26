@@ -157,13 +157,15 @@ public class Tile : MonoBehaviour
 
     public void ColorPossibleDistance()
     {
-        this.tileColor.color = Color.blue;
+        Color newColor = new Color(0.2f, 0.5f, 1.0f, 0.9f);
+        this.tileColor.color = newColor;
         this.isShowingDistance = true;
     }
 
     public void ColorPossibleAttackRange()
     {
-        this.tileColor.color = Color.red;
+        Color newColor = new Color(1.0f, 0.2f, 0.4f, 0.9f);
+        this.tileColor.color = newColor;
         this.isShowingAttackRange = true;
     }
 
