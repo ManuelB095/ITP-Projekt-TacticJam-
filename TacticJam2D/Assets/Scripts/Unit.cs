@@ -8,6 +8,13 @@ public class Unit : MonoBehaviour
     int speed;
     int attackRange;
 
+    enum Team
+    {
+        PlayerBlue,
+        PlayerRed,
+        NonPlayerCharacter
+    }
+
     private void Awake()
     {
         tileOccupiedBy = null;

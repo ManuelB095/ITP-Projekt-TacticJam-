@@ -6,8 +6,10 @@ public class TileMap : MonoBehaviour
 {
     //Prefabs
     public GameObject tile;
-    public GameObject unit;
+    public GameObject playerUnitBlue;
+    public GameObject playerUnitRed;
 
+    //Tilemap variables
     private int height;
     private int length;
     private List<Tile> tileList;
@@ -25,7 +27,7 @@ public class TileMap : MonoBehaviour
         unitList = new List<Unit>();
 
         GenerateMap1();
-        AddUnitToMap(0);
+        AddUnitToMap(0, 50);
     }
 
     private void GenerateMapTest()
@@ -85,14 +87,22 @@ public class TileMap : MonoBehaviour
         }
     }
 
-    private void AddUnitToMap(int tileNumber)
+    //This is a test function and needs rewriting
+    private void AddUnitToMap(int tileNumber, int tileEnemy)
     {
-        GameObject newUnit = Instantiate(unit, GetTileVector(tileNumber), Quaternion.identity);
-        unitList.Add(newUnit.GetComponent<Unit>());
+        GameObject newUnitBlue = Instantiate(playerUnitBlue, GetTileVector(tileNumber), Quaternion.identity);
+        unitList.Add(newUnitBlue.GetComponent<Unit>());
         Tile tileToAddTo = tileList[tileNumber];
-        tileToAddTo.AddUnitToTile(newUnit.GetComponent<Unit>());
-        newUnit.GetComponent<Unit>().Initialize(tileToAddTo);
+        tileToAddTo.AddUnitToTile(newUnitBlue.GetComponent<Unit>());
+        newUnitBlue.GetComponent<Unit>().Initialize(tileToAddTo);
         tileToAddTo.OccupyTile();
+
+        GameObject newUnitRed = Instantiate(playerUnitRed, GetTileVector(tileEnemy), Quaternion.identity);
+        unitList.Add(newUnitRed.GetComponent<Unit>());
+        Tile tileToAddTo2 = tileList[tileEnemy];
+        tileToAddTo2.AddUnitToTile(newUnitRed.GetComponent<Unit>());
+        newUnitRed.GetComponent<Unit>().Initialize(tileToAddTo2);
+        tileToAddTo2.OccupyTile();
     }
 
     private int GetHeight()
