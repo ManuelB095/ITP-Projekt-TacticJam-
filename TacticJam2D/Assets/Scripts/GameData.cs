@@ -15,7 +15,6 @@ public class GameData : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    // Update is called once per frame
     public void setunitsone(int unit, int type)
     {
         unitsone[unit] = type;

@@ -10,6 +10,10 @@ public class GameHandler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        AudioManager audioMngr = FindObjectOfType<AudioManager>();
+        audioMngr.StopPlaying();
+        audioMngr.Play("BattleTheme1");
+
         for (int i = 0; i < 3; i++)
         {
             playerCharacters[i] = GameObject.Find("GameData").GetComponent<GameData>().getunitsone(i);
