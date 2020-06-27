@@ -19,7 +19,7 @@ public class GameData : MonoBehaviour
     public void setunitsone(int unit, int type)
     {
         unitsone[unit] = type;
-        print(unitsone[unit]);
+        print(unit + " Player One " + unitsone[unit]);
     }
 
     public int getunitsone(int unit)
@@ -30,7 +30,7 @@ public class GameData : MonoBehaviour
     public void setunitstwo(int unit, int type)
     {
         unitstwo[unit] = type;
-        print(unitstwo[unit]);
+        print(unit + " Player Two " + unitstwo[unit]);
     }
 
     public int getunitstwo(int unit)
