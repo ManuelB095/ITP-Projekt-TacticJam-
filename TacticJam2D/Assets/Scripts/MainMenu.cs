@@ -37,6 +37,7 @@ public class MainMenu : MonoBehaviour
 
             }
             unitname(unitone, textfeldone);
+            GameObject.Find("GameData").GetComponent<GameData>().setunitsone(unit, unitone);
         }
         else if (unit == 1)
         {
@@ -46,6 +47,7 @@ public class MainMenu : MonoBehaviour
                 unittwo = 0;
             }
             unitname(unittwo, textfeldtwo);
+            GameObject.Find("GameData").GetComponent<GameData>().setunitsone(unit, unittwo);
         }
         else if (unit == 2)
         {
@@ -55,6 +57,7 @@ public class MainMenu : MonoBehaviour
                 unitthree = 0;
             }
             unitname(unitthree, textfeldthree);
+            GameObject.Find("GameData").GetComponent<GameData>().setunitsone(unit, unitthree);
         }
     }
 
@@ -68,6 +71,7 @@ public class MainMenu : MonoBehaviour
                 unitone = 2;
             }
             unitname(unitone, textfeldone);
+            GameObject.Find("GameData").GetComponent<GameData>().setunitsone(unit, unitone);
         }
         else if (unit == 1)
         {
@@ -77,6 +81,7 @@ public class MainMenu : MonoBehaviour
                 unittwo = 2;
             }
             unitname(unittwo, textfeldtwo);
+            GameObject.Find("GameData").GetComponent<GameData>().setunitsone(unit, unittwo);
         }
         else if (unit == 2)
         {
@@ -86,6 +91,7 @@ public class MainMenu : MonoBehaviour
                 unitthree = 2;
             }
             unitname(unitthree, textfeldthree);
+            GameObject.Find("GameData").GetComponent<GameData>().setunitsone(unit, unitthree);
         }
     }
 
