@@ -10,10 +10,20 @@ public class MainMenu : MonoBehaviour
     public Text textfeldone;
     public Text textfeldtwo;
     public Text textfeldthree;
+
+    public Sprite swordsman;
+    public Sprite superSwordsman;
+    public Sprite evilSwordsman;
+
+    public Image imageOne;
+    public Image imageTwo;
+    public Image imageThree;
+
     public int unitone = 0;
     public int unittwo = 0;
     public int unitthree = 0;
-    public void PlayGame()
+
+    public void StartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
@@ -22,9 +32,6 @@ public class MainMenu : MonoBehaviour
         Debug.Log("Quit !");
         Application.Quit();
     }
-
-
-
 
     public void ChangeUniteRight(int unit)
     {
@@ -37,6 +44,7 @@ public class MainMenu : MonoBehaviour
 
             }
             unitname(unitone, textfeldone);
+            unitImage(unitone, imageOne);
         }
         else if (unit == 1)
         {
@@ -46,6 +54,8 @@ public class MainMenu : MonoBehaviour
                 unittwo = 0;
             }
             unitname(unittwo, textfeldtwo);
+            unitImage(unittwo, imageTwo);
+
         }
         else if (unit == 2)
         {
@@ -55,6 +65,8 @@ public class MainMenu : MonoBehaviour
                 unitthree = 0;
             }
             unitname(unitthree, textfeldthree);
+            unitImage(unitthree, imageThree);
+
         }
     }
 
@@ -68,6 +80,7 @@ public class MainMenu : MonoBehaviour
                 unitone = 2;
             }
             unitname(unitone, textfeldone);
+            unitImage(unitone, imageOne);
         }
         else if (unit == 1)
         {
@@ -77,6 +90,7 @@ public class MainMenu : MonoBehaviour
                 unittwo = 2;
             }
             unitname(unittwo, textfeldtwo);
+            unitImage(unittwo, imageTwo);
         }
         else if (unit == 2)
         {
@@ -86,6 +100,7 @@ public class MainMenu : MonoBehaviour
                 unitthree = 2;
             }
             unitname(unitthree, textfeldthree);
+            unitImage(unitthree, imageThree);
         }
     }
 
@@ -102,6 +117,24 @@ public class MainMenu : MonoBehaviour
         else if (i == 2)
         {
             feld.text = "Barrier";
+        }
+    }
+
+    private void unitImage(int i, Image img)
+    {
+        img = img.GetComponent<Image>();
+
+        if (i == 0)
+        {
+            img.sprite = swordsman;
+        }
+        else if (i == 1)
+        {
+            img.sprite = superSwordsman;
+        }
+        else if (i == 2)
+        {
+            img.sprite = evilSwordsman;
         }
     }
 
