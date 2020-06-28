@@ -30,6 +30,40 @@ public class TileMap : MonoBehaviour
         AddUnitToMap(0, 50);
     }
 
+    //Getter
+    private int GetHeight()
+    {
+        return this.height;
+    }
+
+    private int GetLength()
+    {
+        return this.length;
+    }
+
+    private Vector2 GetTileVector(int tileInList)
+    {
+        float x = tileList[tileInList].transform.position.x;
+        float y = tileList[tileInList].transform.position.y + 0.2f;
+
+        Vector2 vec = new Vector2(x, y);
+        return vec;
+    }
+
+    public Tile GetTileFromList(int row, int column)
+    {
+        Tile tileToLookFor = tileList.Find(ourObject => ourObject.GetRow() == row && ourObject.GetColumn() == column);
+        if (tileToLookFor)
+        {
+            return tileToLookFor;
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    //Map Generators
     private void GenerateMapTest()
     {
         for (int x = 0; x < GetHeight(); ++x)
@@ -87,6 +121,7 @@ public class TileMap : MonoBehaviour
         }
     }
 
+    //Unit Handling
     //This is a test function and needs rewriting
     private void AddUnitToMap(int tileNumber, int tileEnemy)
     {
@@ -105,38 +140,7 @@ public class TileMap : MonoBehaviour
         tileToAddTo2.OccupyTile();
     }
 
-    private int GetHeight()
-    {
-        return this.height;
-    }
-
-    private int GetLength()
-    {
-        return this.length;
-    }
-
-    private Vector2 GetTileVector(int tileInList)
-    {
-        float x = tileList[tileInList].transform.position.x;
-        float y = tileList[tileInList].transform.position.y + 0.2f;
-
-        Vector2 vec = new Vector2(x, y);
-        return vec;
-    }
-
-    public Tile GetTileFromList(int row, int column)
-    {
-        Tile tileToLookFor = tileList.Find(ourObject => ourObject.GetRow() == row && ourObject.GetColumn() == column);
-        if(tileToLookFor)
-        {
-            return tileToLookFor;
-        }
-        else
-        {
-            return null;
-        }
-    }
-
+    
     public void UnshowPossibleDistance()
     {
         foreach(Tile tile in tileList)

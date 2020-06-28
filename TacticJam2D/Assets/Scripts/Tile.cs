@@ -34,26 +34,7 @@ public class Tile : MonoBehaviour
         column = colToSet;
     }
 
-    public void OccupyTile()
-    {
-        if(!isOccupied)
-        {
-            isOccupied = true;
-            tileColor.color = Color.yellow;
-            Debug.Log("Is now occupied");
-        } 
-    }
-
-    public void UnoccupyTile()
-    {
-        if (isOccupied)
-        {
-            isOccupied = false;
-            tileColor.color = Color.white;
-            Debug.Log("Is now unoccupied");
-        }
-    }
-
+    //Getters
     public int GetRow()
     {
         return row;
@@ -79,6 +60,28 @@ public class Tile : MonoBehaviour
         return this.tileNeighbours;
     }
 
+
+    //Unit Placement
+    public void OccupyTile()
+    {
+        if(!isOccupied)
+        {
+            isOccupied = true;
+            tileColor.color = Color.yellow;
+            Debug.Log("Is now occupied");
+        } 
+    }
+
+    public void UnoccupyTile()
+    {
+        if (isOccupied)
+        {
+            isOccupied = false;
+            tileColor.color = Color.white;
+            Debug.Log("Is now unoccupied");
+        }
+    }
+
     public void AddUnitToTile(Unit unitToOccupy)
     {
         if(isOccupied)
@@ -92,6 +95,7 @@ public class Tile : MonoBehaviour
         }
     }
 
+    //Coloring Tiles (Ranges of Units)
     public void ShowPossibleDistance(int speed, int attackRange)
     {
         foreach (Tile neighbours in tileNeighbours)

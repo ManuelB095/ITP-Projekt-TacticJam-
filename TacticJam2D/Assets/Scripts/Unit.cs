@@ -27,6 +27,7 @@ public class Unit : MonoBehaviour
         tileOccupiedBy = tileToOccupy;
     }
 
+    //Moving functions
     public void MoveUnit(Transform newLocation, Tile tileToMoveTo)
     {
         if(tileOccupiedBy != null)
