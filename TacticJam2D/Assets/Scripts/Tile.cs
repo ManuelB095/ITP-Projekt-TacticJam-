@@ -52,15 +52,20 @@ public class Tile : MonoBehaviour
 
     public List<Tile> GetNeighbourList()
     {
-        return this.tileNeighbours;
+        return tileNeighbours;
     }
 
+    public Unit IsOccupiedByUnit()
+    {
+        return occupiedBy;
+    }
 
     //Unit Placement
-    public void OccupyTile()
+    public void OccupyTile(Unit unitToOccupy)
     {
         if(!isOccupied)
         {
+            occupiedBy = unitToOccupy;
             isOccupied = true;
             tileColor.color = Color.yellow;
             Debug.Log("Is now occupied");
@@ -71,10 +76,34 @@ public class Tile : MonoBehaviour
     {
         if (isOccupied)
         {
+            occupiedBy = null;
             isOccupied = false;
             tileColor.color = Color.white;
             Debug.Log("Is now unoccupied");
         }
+    }
+
+    public void ColorTileForTurn(int color)
+    {
+        switch(color)
+        {
+            case 1:
+                tileColor.color = Color.cyan;
+                break;
+            case 2:
+                tileColor.color = Color.green;
+                break;
+            case 3:
+                tileColor.color = Color.yellow;
+                break;
+            case 4:
+                tileColor.color = Color.yellow;
+                break;
+            default:
+                tileColor.color = Color.white;
+                break;
+        }
+        
     }
 
     public void AddUnitToTile(Unit unitToOccupy)
@@ -170,6 +199,24 @@ public class Tile : MonoBehaviour
 
     public void UncolorTile()
     {
+        //if occupied, check if that team is active, then if yes color cyan, if no color yellow
+        if(occupiedBy != null)
+        {
+            if(GameObject.FindObjectOfType<GameHandler>().GetActiveTeam() == occupiedBy.GetUnitsTeam())
+            {
+                this.tileColor.color = Color.cyan;
+                this.isShowingDistance = false;
+                this.isShowingAttackRange = false;
+                return;
+            }
+            else
+            {
+                this.tileColor.color = Color.yellow;
+                this.isShowingDistance = false;
+                this.isShowingAttackRange = false;
+                return;
+            }
+        }
         this.tileColor.color = Color.white;
         this.isShowingDistance = false;
         this.isShowingAttackRange = false;

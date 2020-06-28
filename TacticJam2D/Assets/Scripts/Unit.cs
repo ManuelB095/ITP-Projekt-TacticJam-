@@ -17,9 +17,9 @@ public class Unit : MonoBehaviour
 
     enum State
     {
-        active = 1,
-        notActive = 2,
-        done = 3,
+        myTurn = 1,
+        myTurnMoved = 2,
+        myTurnDone = 3,
         notMyTurn = 4
     }
 
@@ -28,7 +28,6 @@ public class Unit : MonoBehaviour
         maxHealth = 30;
         currentHealth = maxHealth;
         healthbar.SetMaxHealth(maxHealth);
-        unitState = State.notMyTurn;
 
         tileOccupiedBy = null;
         speed = 2;
@@ -57,7 +56,7 @@ public class Unit : MonoBehaviour
         y = newLocation.position.y + 0.2f;
 
         this.transform.position = new Vector2(x, y);
-        tileToMoveTo.OccupyTile();
+        tileToMoveTo.OccupyTile(this);
     }
 
     public void ShowPossibleDistance()
@@ -66,6 +65,33 @@ public class Unit : MonoBehaviour
         {
             tileOccupiedBy.ShowPossibleDistance(speed, attackRange);
         }
+    }
+
+    //Funktion derzeit nur für Range 1, benötigt Anpassung für höhere Attackranges
+    public bool HasSelectedEnemyInRange(Unit enemy)
+    {
+        List<Tile> neighbourList = tileOccupiedBy.GetNeighbourList();
+        foreach(Tile tile in neighbourList)
+        {
+            if(tile.IsOccupiedByUnit() == enemy)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public bool HasEnemyInRange()
+    {
+        List<Tile> neighbourList = tileOccupiedBy.GetNeighbourList();
+        foreach (Tile tile in neighbourList)
+        {
+            if (tile.IsOccupiedByUnit() != null)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     //Getter und Setter
@@ -93,6 +119,12 @@ public class Unit : MonoBehaviour
     public int GetUnitsTeam()
     {
         return (int)isOnTeam;
+    }
+
+    public void SetUnitState(int state)
+    {
+        unitState = (State)state;
+        tileOccupiedBy.ColorTileForTurn(state);
     }
 }
 

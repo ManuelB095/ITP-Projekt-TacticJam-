@@ -7,8 +7,8 @@ public class GameHandler : MonoBehaviour
     int[] playerCharacters = new int[3];
     int[] enemyCharacters = new int[3];
 
-    int teamOneCharacters;
-    int teamTwoCharacters;
+    int teamOneCharacterCount;
+    int teamTwoCharacterCount;
     private Team activeTeam;
 
     private List<Unit> teamOneUnits;
@@ -21,7 +21,7 @@ public class GameHandler : MonoBehaviour
         activeTeam = Team.teamOne;
     }
 
-    void Start()
+    /*void Start()
     {
         AudioManager audioMngr = FindObjectOfType<AudioManager>();
         audioMngr.StopPlaying();
@@ -34,11 +34,68 @@ public class GameHandler : MonoBehaviour
             print("Spieler eins " + playerCharacters[i]);
             print("Spieler zwei " + enemyCharacters[i]);
         }
-    }
+    }*/
 
     public void SetActiveTeam(int team)
     {
         activeTeam = (Team)team;
+        if(activeTeam == Team.teamOne)
+        {
+            foreach (Unit unit in teamOneUnits)
+            {
+                unit.SetUnitState(1);
+            }
+            foreach(Unit unit in teamTwoUnits)
+            {
+                unit.SetUnitState(4);
+            }
+        }
+        else if(activeTeam == Team.teamTwo)
+        {
+            foreach (Unit unit in teamTwoUnits)
+            {
+                unit.SetUnitState(1);
+            }
+            foreach (Unit unit in teamOneUnits)
+            {
+                unit.SetUnitState(4);
+            }
+        }
+        
+    }
+
+    public void CheckForTurnEnd()
+    {
+        if (activeTeam == Team.teamOne)
+        {
+            bool endTurn = true;
+            foreach(Unit unit in teamOneUnits)
+            {
+                if(unit.GetUnitState() != 3)
+                {
+                    endTurn = false;
+                }
+            }
+            if(endTurn)
+            {
+                SetActiveTeam((int)Team.teamTwo);
+            }
+        }
+        else if(activeTeam == Team.teamTwo)
+        {
+            bool endTurn = true;
+            foreach (Unit unit in teamTwoUnits)
+            {
+                if (unit.GetUnitState() != 3)
+                {
+                    endTurn = false;
+                }
+            }
+            if (endTurn)
+            {
+                SetActiveTeam((int)Team.teamOne);
+            }
+        }
     }
 
     public int GetActiveTeam()
@@ -46,4 +103,17 @@ public class GameHandler : MonoBehaviour
         return (int)activeTeam;
     }
     
+    public void AddUnitToList(Unit unitToAdd, int team)
+    {
+        if(team == 1)
+        {
+            teamOneUnits.Add(unitToAdd);
+            return;
+        }
+        else if(team == 2)
+        {
+            teamTwoUnits.Add(unitToAdd);
+            return;
+        }
+    }
 }
