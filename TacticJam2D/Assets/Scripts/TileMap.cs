@@ -129,14 +129,14 @@ public class TileMap : MonoBehaviour
         unitList.Add(newUnitBlue.GetComponent<Unit>());
         Tile tileToAddTo = tileList[tileNumber];
         tileToAddTo.AddUnitToTile(newUnitBlue.GetComponent<Unit>());
-        newUnitBlue.GetComponent<Unit>().Initialize(tileToAddTo);
+        newUnitBlue.GetComponent<Unit>().Initialize(tileToAddTo, 1, 4);
         tileToAddTo.OccupyTile();
 
         GameObject newUnitRed = Instantiate(playerUnitRed, GetTileVector(tileEnemy), Quaternion.identity);
         unitList.Add(newUnitRed.GetComponent<Unit>());
         Tile tileToAddTo2 = tileList[tileEnemy];
         tileToAddTo2.AddUnitToTile(newUnitRed.GetComponent<Unit>());
-        newUnitRed.GetComponent<Unit>().Initialize(tileToAddTo2);
+        newUnitRed.GetComponent<Unit>().Initialize(tileToAddTo2, 2, 4);
         tileToAddTo2.OccupyTile();
     }
 

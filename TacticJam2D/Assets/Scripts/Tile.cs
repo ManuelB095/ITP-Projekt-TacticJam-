@@ -23,11 +23,6 @@ public class Tile : MonoBehaviour
         occupiedBy = null;
     }
 
-    private void Start()
-    {
-        
-    }
-
     public void Initialize(int rowToSet, int colToSet)
     {
         row = rowToSet;
