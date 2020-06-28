@@ -117,6 +117,11 @@ public class MouseManager : MonoBehaviour
         }
     }
 
-    
+    public void UnsetMouseObjects()
+    {
+        savedObject = null;
+        selectedUnit = null;
+        GameObject.FindObjectOfType<TileMap>().UnshowPossibleDistance();
+    }
 
 }

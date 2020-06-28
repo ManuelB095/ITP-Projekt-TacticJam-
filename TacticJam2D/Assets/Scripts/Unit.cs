@@ -6,6 +6,8 @@ public class Unit : MonoBehaviour
 {
     private Tile tileOccupiedBy;
     public Healthbar healthbar;
+    public Collider2D unitCollider;
+    public SpriteRenderer unitSprite;
     private Team isOnTeam;
     private State unitState;
 
@@ -14,6 +16,7 @@ public class Unit : MonoBehaviour
     int attackPower;
     int speed;
     int attackRange;
+    bool alive;
 
     enum State
     {
@@ -33,6 +36,7 @@ public class Unit : MonoBehaviour
         speed = 2;
         attackRange = 1;
         attackPower = 8;
+        alive = true;
     }
 
     public void Initialize(Tile tileToOccupy, int team, int state)
@@ -64,6 +68,21 @@ public class Unit : MonoBehaviour
         if (tileOccupiedBy != null)
         {
             tileOccupiedBy.ShowPossibleDistance(speed, attackRange);
+        }
+    }
+
+    private void SetAlive(bool aliveStatus)
+    {
+        alive = aliveStatus;
+        if(!alive)
+        {
+            unitSprite.enabled = false;
+            unitCollider.enabled = false;
+            tileOccupiedBy.UnoccupyTile();
+            tileOccupiedBy = null;
+            healthbar.DisableHealthbar();
+            healthbar.enabled = false;
+            GameObject.FindObjectOfType<GameHandler>().CheckGameEnd(isOnTeam);
         }
     }
 
@@ -99,6 +118,11 @@ public class Unit : MonoBehaviour
     {
         currentHealth -= damage;
         healthbar.SetHealth(currentHealth);
+        //if <= 0 do kill, gamehandler check ob alle units kill, then if yes win for other player
+        if(currentHealth <= 0)
+        {
+            SetAlive(false);
+        }
     }
 
     public int GetAttackPower()
@@ -121,10 +145,18 @@ public class Unit : MonoBehaviour
         return (int)isOnTeam;
     }
 
+    public bool GetAliveStatus()
+    {
+        return alive;
+    }
+
     public void SetUnitState(int state)
     {
-        unitState = (State)state;
-        tileOccupiedBy.ColorTileForTurn(state);
+        if(alive)
+        {
+            unitState = (State)state;
+            tileOccupiedBy.ColorTileForTurn(state);
+        }
     }
 }
 

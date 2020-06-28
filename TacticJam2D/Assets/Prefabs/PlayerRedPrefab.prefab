@@ -98,6 +98,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthbar: {fileID: 6230673886984174247}
+  unitCollider: {fileID: 933573311818204161}
+  unitSprite: {fileID: 3628887694708969491}
 --- !u!50 &4605122557805617457
 Rigidbody2D:
   serializedVersion: 4

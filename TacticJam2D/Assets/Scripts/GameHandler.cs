@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameHandler : MonoBehaviour
 {
@@ -14,14 +15,30 @@ public class GameHandler : MonoBehaviour
     private List<Unit> teamOneUnits;
     private List<Unit> teamTwoUnits;
 
+    //UI Stuff
+    public Text playerOneTurn;
+    public Text playerTwoTurn;
+    public Text victoryText;
+    public Button endTurnButton;
+    public Button endGameButton;
+    
+
     private void Awake()
     {
         teamOneUnits = new List<Unit>();
         teamTwoUnits = new List<Unit>();
         activeTeam = Team.teamOne;
+        playerTwoTurn.enabled = false;
+        victoryText.enabled = false;
+        Button endTurn = endTurnButton.GetComponent<Button>();
+        endTurn.onClick.AddListener(EndTurnFunction);
+        Button endGame = endGameButton.GetComponent<Button>();
+        endGame.onClick.AddListener(FinalizeGame);
+        endGameButton.image.enabled = false;
+        endGameButton.enabled = false;
     }
 
-    /*void Start()
+    void Start()
     {
         AudioManager audioMngr = FindObjectOfType<AudioManager>();
         audioMngr.StopPlaying();
@@ -34,7 +51,21 @@ public class GameHandler : MonoBehaviour
             print("Spieler eins " + playerCharacters[i]);
             print("Spieler zwei " + enemyCharacters[i]);
         }
-    }*/
+    }
+
+    public void EndTurnFunction()
+    {
+        GameObject.FindObjectOfType<MouseManager>().UnsetMouseObjects();
+        switch(activeTeam)
+        {
+            case Team.teamOne:
+                SetActiveTeam((int)Team.teamTwo);
+                break;
+            case Team.teamTwo:
+                SetActiveTeam((int)Team.teamOne);
+                break;
+        }
+    }
 
     public void SetActiveTeam(int team)
     {
@@ -49,6 +80,8 @@ public class GameHandler : MonoBehaviour
             {
                 unit.SetUnitState(4);
             }
+            playerOneTurn.enabled = true;
+            playerTwoTurn.enabled = false;
         }
         else if(activeTeam == Team.teamTwo)
         {
@@ -60,6 +93,8 @@ public class GameHandler : MonoBehaviour
             {
                 unit.SetUnitState(4);
             }
+            playerOneTurn.enabled = false;
+            playerTwoTurn.enabled = true;
         }
         
     }
@@ -96,6 +131,67 @@ public class GameHandler : MonoBehaviour
                 SetActiveTeam((int)Team.teamOne);
             }
         }
+    }
+
+    public void CheckGameEnd(Team teamToCheckFor)
+    {
+        bool gameOver = true;
+        switch(teamToCheckFor)
+        {
+            case Team.teamOne:
+                foreach(Unit unit in teamOneUnits)
+                {
+                    if(unit.GetAliveStatus())
+                    {
+                        gameOver = false;
+                    }
+                }
+                if(gameOver)
+                {
+                    EndGame(teamToCheckFor);
+                }
+                break;
+
+            case Team.teamTwo:
+                foreach (Unit unit in teamTwoUnits)
+                {
+                    if (unit.GetAliveStatus())
+                    {
+                        gameOver = false;
+                    }
+                }
+                if (gameOver)
+                {
+                    EndGame(teamToCheckFor);
+                }
+                break;
+        }
+    }
+
+    private void EndGame(Team teamThatLost)
+    {
+        //do thingy for winning team
+        endGameButton.image.enabled = true;
+        endGameButton.enabled = true;
+        victoryText.enabled = true;
+        if(teamThatLost == Team.teamOne)
+        {
+            victoryText.text = "Player 2 Wins!";
+        }
+        if (teamThatLost == Team.teamTwo)
+        {
+            victoryText.text = "Player 1 Wins!";
+        }
+        playerOneTurn.enabled = false;
+        playerTwoTurn.enabled = false;
+        endTurnButton.image.enabled = false;
+        endTurnButton.enabled = false;
+    }
+
+    private void FinalizeGame()
+    {
+        //Send players back to main menu
+        Debug.Log("grats");
     }
 
     public int GetActiveTeam()

@@ -80,7 +80,7 @@ public class TileMap : MonoBehaviour
 
     private void GenerateMap1()
     {
-        Vector2 startPosition = new Vector2(-3f, -3f);
+        Vector2 startPosition = new Vector2(-3.5f, -3f);
         int rowOffset = 0;
         float offset = 0f;
 

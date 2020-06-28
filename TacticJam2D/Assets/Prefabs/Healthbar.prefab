@@ -103,6 +103,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slider: {fileID: 862132266166093088}
+  healthbarImages:
+  - {fileID: 4273228832370857610}
+  - {fileID: 2092736385400102375}
+  - {fileID: 4257502159425971293}
 --- !u!1 &5307378065238187048
 GameObject:
   m_ObjectHideFlags: 0
