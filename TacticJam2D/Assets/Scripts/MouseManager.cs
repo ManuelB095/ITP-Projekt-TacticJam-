@@ -66,13 +66,15 @@ public class MouseManager : MonoBehaviour
                 }
                 if(savedObject.GetComponent<Unit>().GetUnitState() == 1)
                 {
-                    if(selectedUnit.GetComponent<Unit>().GetUnitState() == 2)
+                    GameObject.FindObjectOfType<TileMap>().UnshowPossibleDistance();
+                    if (selectedUnit.GetComponent<Unit>().GetUnitState() == 2)
                     {
                         selectedUnit.GetComponent<Unit>().SetUnitState(3);
                     }
                     selectedUnit = savedObject;
                     selectedUnit.GetComponent<Unit>().ShowPossibleDistance();
                     savedObject = null;
+                    return;
                 }
                 if(savedObject.GetComponent<Unit>().GetUnitState() == 4)
                 {
@@ -93,6 +95,7 @@ public class MouseManager : MonoBehaviour
                 GameObject.FindObjectOfType<TileMap>().UnshowPossibleDistance();
                 gameHandler.CheckForTurnEnd();
                 savedObject = null;
+                return;
             }
             else if(savedObject.GetComponent<Tile>() && selectedUnit != null) //Tile was clicked while Unit was selected
             {
