@@ -27,7 +27,7 @@ public class TileMap : MonoBehaviour
         unitList = new List<Unit>();
 
         GenerateMap1();
-        AddUnitToMap(0, 50);
+        AddUnitsToMap();
         GameObject.FindObjectOfType<GameHandler>().SetActiveTeam((int)Team.teamOne);
     }
 
@@ -124,7 +124,18 @@ public class TileMap : MonoBehaviour
 
     //Unit Handling
     //This is a test function and needs rewriting
-    private void AddUnitToMap(int tileNumber, int tileEnemy)
+    private void AddUnitsToMap()
+    {
+        AddBlueUnitToMap(13);
+        AddRedUnitToMap(20);
+        AddBlueUnitToMap(21);
+        AddRedUnitToMap(29);
+        AddBlueUnitToMap(30);
+        AddRedUnitToMap(37);
+
+    }
+
+    private void AddBlueUnitToMap(int tileNumber)
     {
         GameObject newUnitBlue = Instantiate(playerUnitBlue, GetTileVector(tileNumber), Quaternion.identity);
         GameObject.FindObjectOfType<GameHandler>().AddUnitToList(newUnitBlue.GetComponent<Unit>(), 1);
@@ -132,10 +143,13 @@ public class TileMap : MonoBehaviour
         tileToAddTo.AddUnitToTile(newUnitBlue.GetComponent<Unit>());
         newUnitBlue.GetComponent<Unit>().Initialize(tileToAddTo, 1, 4);
         tileToAddTo.OccupyTile(newUnitBlue.GetComponent<Unit>());
+    }
 
-        GameObject newUnitRed = Instantiate(playerUnitRed, GetTileVector(tileEnemy), Quaternion.identity);
+    private void AddRedUnitToMap(int tileNumber)
+    {
+        GameObject newUnitRed = Instantiate(playerUnitRed, GetTileVector(tileNumber), Quaternion.identity);
         GameObject.FindObjectOfType<GameHandler>().AddUnitToList(newUnitRed.GetComponent<Unit>(), 2);
-        Tile tileToAddTo2 = tileList[tileEnemy];
+        Tile tileToAddTo2 = tileList[tileNumber];
         tileToAddTo2.AddUnitToTile(newUnitRed.GetComponent<Unit>());
         newUnitRed.GetComponent<Unit>().Initialize(tileToAddTo2, 2, 4);
         tileToAddTo2.OccupyTile(newUnitRed.GetComponent<Unit>());

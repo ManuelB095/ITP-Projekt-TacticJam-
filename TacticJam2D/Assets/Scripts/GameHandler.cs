@@ -38,7 +38,7 @@ public class GameHandler : MonoBehaviour
         endGameButton.enabled = false;
     }
 
-    void Start()
+    /*void Start()
     {
         AudioManager audioMngr = FindObjectOfType<AudioManager>();
         audioMngr.StopPlaying();
@@ -51,7 +51,7 @@ public class GameHandler : MonoBehaviour
             print("Spieler eins " + playerCharacters[i]);
             print("Spieler zwei " + enemyCharacters[i]);
         }
-    }
+    }*/
 
     public void EndTurnFunction()
     {

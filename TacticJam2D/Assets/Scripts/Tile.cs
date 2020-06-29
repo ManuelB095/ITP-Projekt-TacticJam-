@@ -204,10 +204,25 @@ public class Tile : MonoBehaviour
         {
             if(GameObject.FindObjectOfType<GameHandler>().GetActiveTeam() == occupiedBy.GetUnitsTeam())
             {
-                this.tileColor.color = Color.cyan;
-                this.isShowingDistance = false;
-                this.isShowingAttackRange = false;
-                return;
+                switch(occupiedBy.GetUnitState())
+                {
+                    case 1:
+                        this.tileColor.color = Color.cyan;
+                        this.isShowingDistance = false;
+                        this.isShowingAttackRange = false;
+                        return;
+                    case 2:
+                        tileColor.color = Color.green;
+                        this.isShowingDistance = false;
+                        this.isShowingAttackRange = false;
+                        return;
+                    case 3:
+                        tileColor.color = Color.yellow;
+                        this.isShowingDistance = false;
+                        this.isShowingAttackRange = false;
+                        return;
+
+                }
             }
             else
             {

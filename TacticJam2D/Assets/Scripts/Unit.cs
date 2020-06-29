@@ -105,7 +105,7 @@ public class Unit : MonoBehaviour
         List<Tile> neighbourList = tileOccupiedBy.GetNeighbourList();
         foreach (Tile tile in neighbourList)
         {
-            if (tile.IsOccupiedByUnit() != null)
+            if (tile.IsOccupiedByUnit() != null && tile.IsOccupiedByUnit().GetUnitsTeam() != this.GetUnitsTeam())
             {
                 return true;
             }
