@@ -1,8 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System;
+using UnityEngine.SceneManagement;
 
 public class GameHandler : MonoBehaviour
 {
@@ -28,9 +29,11 @@ public class GameHandler : MonoBehaviour
     {
         teamOneUnits = new List<Unit>();
         teamTwoUnits = new List<Unit>();
+
         activeTeam = Team.teamOne;
         playerTwoTurn.enabled = false;
         victoryText.enabled = false;
+
         Button endTurn = endTurnButton.GetComponent<Button>();
         endTurn.onClick.AddListener(EndTurnFunction);
         Button endGame = endGameButton.GetComponent<Button>();
@@ -201,6 +204,7 @@ public class GameHandler : MonoBehaviour
     {
         //Send players back to main menu
         Debug.Log("grats");
+        Application.Quit();
     }
 
     public int GetActiveTeam()
