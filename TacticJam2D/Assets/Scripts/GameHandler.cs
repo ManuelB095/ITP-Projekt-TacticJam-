@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class GameHandler : MonoBehaviour
 {
@@ -38,20 +39,28 @@ public class GameHandler : MonoBehaviour
         endGameButton.enabled = false;
     }
 
-    /*void Start()
+    void Start()
     {
-        AudioManager audioMngr = FindObjectOfType<AudioManager>();
-        audioMngr.StopPlaying();
-        audioMngr.Play("BattleTheme1");
-
-        for (int i = 0; i < 3; i++)
+        try
         {
-            playerCharacters[i] = GameObject.Find("GameData").GetComponent<GameData>().getunitsone(i);
-            enemyCharacters[i] = GameObject.Find("GameData").GetComponent<GameData>().getunitstwo(i);
-            print("Spieler eins " + playerCharacters[i]);
-            print("Spieler zwei " + enemyCharacters[i]);
+            AudioManager audioMngr = FindObjectOfType<AudioManager>();
+            audioMngr.StopPlaying();
+            audioMngr.Play("BattleTheme1");
+
+            for (int i = 0; i < 3; i++)
+            {
+                playerCharacters[i] = GameObject.Find("GameData").GetComponent<GameData>().getunitsone(i);
+                enemyCharacters[i] = GameObject.Find("GameData").GetComponent<GameData>().getunitstwo(i);
+                print("Spieler eins " + playerCharacters[i]);
+                print("Spieler zwei " + enemyCharacters[i]);
+            }
         }
-    }*/
+        catch(NullReferenceException ex)
+        {
+            Debug.Log("Audio manager could not be found, error message was: " + ex);
+        }
+        
+    }
 
     public void EndTurnFunction()
     {
